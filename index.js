@@ -22,6 +22,7 @@ AFRAME.registerComponent('cubemap', {
     var srcPath = data;
 
     // Cubemap image files must follow this naming scheme
+    // from: http://threejs.org/docs/index.html#Reference/Textures/CubeTexture
     var urls = [
       'posx.jpg', 'negx.jpg',
       'posy.jpg', 'negy.jpg',
