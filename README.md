@@ -12,19 +12,19 @@ An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 Attach the component to an entity using the path to the folder holding your cubemap as the attribute.
 
-'''html
+```html
   <a-entity cubemap="/assets/Yokohama3/"></a-entity>
-'''
+```
 
 Inside the folder, the component assumes the following naming scheme:
 
-'''javascript
+```javascript
   var urls = [
     'posx.jpg', 'negx.jpg',
     'posy.jpg', 'negy.jpg',
     'posz.jpg', 'negz.jpg'
   ];
-'''
+```
 
 This is the scheme used by Three.js's [CubeTexture](http://threejs.org/docs/index.html#Reference/Textures/CubeTexture). If your cubemap images do not follow this scheme, you will need to rename them (or fork this repo and alter the above in index.js).
 
