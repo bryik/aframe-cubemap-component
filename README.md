@@ -43,7 +43,7 @@ Install and use by directly including the [browser files](dist):
 
 <body>
   <a-scene>
-    <a-entity cubemap="exampleProp: exampleVal"></a-entity>
+    <a-entity cubemap="/assets/Yokohama3/"></a-entity>
   </a-scene>
 </body>
 ```
