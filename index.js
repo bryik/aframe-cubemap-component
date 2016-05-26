@@ -7,7 +7,13 @@ if (typeof AFRAME === 'undefined') {
  */
 AFRAME.registerComponent('cubemap', {
   schema: {
-    type: "string"
+    folder: {
+      type: "string"
+    },
+    edgeLength: {
+      type: "int",
+      default: 500
+    }
   },
 
   /**
@@ -19,7 +25,7 @@ AFRAME.registerComponent('cubemap', {
     var data = this.data;
 
     // Path to the folder containing the 6 cubemap images
-    var srcPath = data;
+    var srcPath = data.folder;
 
     // Cubemap image files must follow this naming scheme
     // from: http://threejs.org/docs/index.html#Reference/Textures/CubeTexture
@@ -52,8 +58,9 @@ AFRAME.registerComponent('cubemap', {
       side: THREE.BackSide
     });
 
-    // Skybox dimensions arbitrarily set to 1000x1000x1000
-    var skyboxGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
+    // Set skybox dimensions
+    var edgeLength = data.edgeLength;
+    var skyboxGeometry = new THREE.CubeGeometry(edgeLength, edgeLength, edgeLength);
 
     // Set entity's object3D
     el.setObject3D('mesh', new THREE.Mesh(skyboxGeometry,skyBoxMaterial));

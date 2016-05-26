@@ -4,16 +4,19 @@ An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 ### Properties
 
-| Property | Description | Default Value |
-| -------- | ----------- | ------------- |
-|   src    | Folder path |     None      |
+|  Property  |               Description               | Default Value |
+|:----------:|:---------------------------------------:|:-------------:|
+|   folder   | Path to the folder holding your cubemap |      none     |
+| edgeLength |  Controls the dimensions of the skybox  |      500      |
+
+By default, the height, width, and depth of the skybox are set to 500. In other words, the dimensions of the skybox are 500x500x500. For performance reasons you will probably want to set this as low as your scene allows; one idea is to attach this component to the camera.
 
 ### Usage
 
 Attach the component to an entity using the path to the folder holding your cubemap as the attribute.
 
 ```html
-  <a-entity cubemap="/assets/Yokohama3/"></a-entity>
+  <a-entity cubemap="folder: /assets/Yokohama3/"></a-entity>
 ```
 
 Inside the folder, the component assumes the following naming scheme:
@@ -30,6 +33,12 @@ This is the scheme used by Three.js's [CubeTexture](http://threejs.org/docs/inde
 
 The Yokohama cubemap texture is the work of [Emil Persson, aka Humus](http://www.humus.name). Check out his website, it is a good source for [cubemap textures](http://www.humus.name/index.php?page=Textures).
 
+To modify the size of the resulting skybox, use the edgeLength property.
+
+```html
+  <a-entity cubemap="folder: /assets/Yokohama3/; edgeLength: 1000"></a-entity>
+```
+
 #### Browser Installation
 
 Install and use by directly including the [browser files](dist):
@@ -43,7 +52,7 @@ Install and use by directly including the [browser files](dist):
 
 <body>
   <a-scene>
-    <a-entity cubemap="/assets/Yokohama3/"></a-entity>
+    <a-entity cubemap="folder: /assets/Yokohama3/"></a-entity>
   </a-scene>
 </body>
 ```
