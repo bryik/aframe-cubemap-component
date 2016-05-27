@@ -1,0 +1,1 @@
+The A-Frame component boilerplate offers automatic gh-pages generation, but it does not work for me (on Windows). I had to put this together manually, so it may be a bit messy.
