@@ -46,23 +46,14 @@ AFRAME.registerComponent('cubemap', {
     var cubemap = loader.load(urls);
     cubemap.format = THREE.RGBFormat;
 
-    var shader = THREE.ShaderLib['cube']; // init cube shader from built-in lib
-    shader.uniforms['tCube'].value = cubemap; // apply textures to shader
-
-    // create shader material
-    var skyBoxMaterial = new THREE.ShaderMaterial({
-      fragmentShader: shader.fragmentShader,
-      vertexShader: shader.vertexShader,
-      uniforms: shader.uniforms,
-      depthWrite: false,
-      side: THREE.BackSide
-    });
+    var skyBoxMaterial = new THREE.MeshBasicMaterial({ envMap: cubemap });
+    skyBoxMaterial.side = THREE.BackSide;
 
     // Set skybox dimensions
     var edgeLength = data.edgeLength;
-    var skyboxGeometry = new THREE.CubeGeometry(edgeLength, edgeLength, edgeLength);
+    var skyBoxGeometry = new THREE.CubeGeometry(edgeLength, edgeLength, edgeLength);
 
     // Set entity's object3D
-    el.setObject3D('mesh', new THREE.Mesh(skyboxGeometry, skyBoxMaterial));
+    el.setObject3D('mesh', new THREE.Mesh(skyBoxGeometry, skyBoxMaterial));
   }
 });
