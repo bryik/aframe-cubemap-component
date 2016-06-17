@@ -1,5 +1,7 @@
 ## aframe-cubemap-component
 
+Note: this is a test branch looking at multiple-cubemap support.
+
 An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 ### Properties

@@ -44,6 +44,7 @@
 /* 0 */
 /***/ function(module, exports) {
 
+	/* global AFRAME, THREE */
 	if (typeof AFRAME === 'undefined') {
 	  throw new Error('Component attempted to register before AFRAME was available.');
 	}
@@ -54,10 +55,10 @@
 	AFRAME.registerComponent('cubemap', {
 	  schema: {
 	    folder: {
-	      type: "string"
+	      type: 'string'
 	    },
 	    edgeLength: {
-	      type: "int",
+	      type: 'int',
 	      default: 500
 	    }
 	  },
@@ -81,22 +82,20 @@
 	      'posz.jpg', 'negz.jpg'
 	    ];
 
-
 	    // Code that follows is adapted from "Skybox and environment map in Three.js" by Roman Liutikov
 	    // http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-threejs
 
 	    // Create loader, set folder path, and load cubemap textures
 	    var loader = new THREE.CubeTextureLoader();
-	    loader.setPath( srcPath );
+	    loader.setPath(srcPath);
 
-	    var cubemap = loader.load( urls );
+	    var cubemap = loader.load(urls);
 	    cubemap.format = THREE.RGBFormat;
 
 	    var shader = THREE.ShaderLib['cube']; // init cube shader from built-in lib
-	    shader.uniforms['tCube'].value = cubemap; // apply textures to shader
 
-	    // create shader material
-	    var skyBoxMaterial = new THREE.ShaderMaterial( {
+	    // Create shader material
+	    var skyBoxShader = new THREE.ShaderMaterial({
 	      fragmentShader: shader.fragmentShader,
 	      vertexShader: shader.vertexShader,
 	      uniforms: shader.uniforms,
@@ -104,13 +103,16 @@
 	      side: THREE.BackSide
 	    });
 
+	    // Clone ShaderMaterial (necessary for multiple cubemaps)
+	    var skyBoxMaterial = skyBoxShader.clone();
+	    skyBoxMaterial.uniforms['tCube'].value = cubemap; // Apply cubemap textures to shader uniforms
+
 	    // Set skybox dimensions
 	    var edgeLength = data.edgeLength;
-	    var skyboxGeometry = new THREE.CubeGeometry(edgeLength, edgeLength, edgeLength);
+	    var skyBoxGeometry = new THREE.CubeGeometry(edgeLength, edgeLength, edgeLength);
 
 	    // Set entity's object3D
-	    el.setObject3D('mesh', new THREE.Mesh(skyboxGeometry,skyBoxMaterial));
-
+	    el.setObject3D('mesh', new THREE.Mesh(skyBoxGeometry, skyBoxMaterial));
 	  }
 	});
 
