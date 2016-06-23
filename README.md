@@ -1,7 +1,5 @@
 ## aframe-cubemap-component
 
-Note: this is a test branch looking at multiple-cubemap support.
-
 An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 ### Properties
@@ -49,7 +47,7 @@ Install and use by directly including the [browser files](dist):
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
-  <script src="https://rawgit.com/bryik/aframe-cubemap-component/more-cubemaps/dist/aframe-cubemap-component.min.js"></script>
+  <script src="https://rawgit.com/bryik/aframe-cubemap-component/master/dist/aframe-cubemap-component.min.js"></script>
 </head>
 
 <body>
