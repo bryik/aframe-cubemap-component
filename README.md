@@ -7,9 +7,9 @@ An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 |  Property  |               Description               | Default Value |
 |:----------:|:---------------------------------------:|:-------------:|
 |   folder   | Path to the folder holding your cubemap |      none     |
-| edgeLength |  Controls the dimensions of the skybox  |      500      |
+| edgeLength |  Controls the dimensions of the skybox  |      5000     |
 
-By default, the height, width, and depth of the skybox are set to 500. In other words, the dimensions of the skybox are 500x500x500. For performance reasons you will probably want to set this as low as your scene allows; one idea is to attach this component to the camera.
+By default, the height, width, and depth of the skybox are set to 5000. In other words, the dimensions of the skybox are 5000x5000x5000.
 
 ### Usage
 

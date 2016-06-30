@@ -13,7 +13,7 @@ AFRAME.registerComponent('cubemap', {
     },
     edgeLength: {
       type: 'int',
-      default: 500
+      default: 5000
     }
   },
 
