@@ -64,9 +64,10 @@
 	  },
 
 	  /**
-	   * Called once when component is attached. Generally for initial setup.
+	   * Called when component is attached and when component data changes.
+	   * Generally modifies the entity based on the data.
 	   */
-	  init: function () {
+	  update: function (oldData) {
 	    // entity data
 	    var el = this.el;
 	    var data = this.data;
@@ -112,7 +113,15 @@
 	    var skyBoxGeometry = new THREE.CubeGeometry(edgeLength, edgeLength, edgeLength);
 
 	    // Set entity's object3D
-	    el.setObject3D('mesh', new THREE.Mesh(skyBoxGeometry, skyBoxMaterial));
+	    el.setObject3D('cubemap', new THREE.Mesh(skyBoxGeometry, skyBoxMaterial));
+	  },
+
+	  /**
+	   * Called when a component is removed (e.g., via removeAttribute).
+	   * Generally undoes all modifications to the entity.
+	   */
+	  remove: function () {
+	    this.el.removeObject3D('cubemap');
 	  }
 	});
 
