@@ -9,11 +9,14 @@ if (typeof AFRAME === 'undefined') {
 AFRAME.registerComponent('cubemap', {
   schema: {
     folder: {
-      type: 'string'
+      type: 'string',
     },
     edgeLength: {
       type: 'int',
-      default: 5000
+      default: 5000,
+    },
+    urls: {
+      type: 'array',
     }
   },
 
@@ -28,16 +31,23 @@ AFRAME.registerComponent('cubemap', {
 
     // Path to the folder containing the 6 cubemap images
     var srcPath = data.folder;
+    if (srcPath === '')
+      srcPath = undefined;
 
     // Cubemap image files must follow this naming scheme
     // from: http://threejs.org/docs/index.html#Reference/Textures/CubeTexture
-    var urls = [
-      'posx.jpg', 'negx.jpg',
-      'posy.jpg', 'negy.jpg',
-      'posz.jpg', 'negz.jpg'
-    ];
+    var urls = this.data.urls;
+    if (urls.length === 0)
+      urls = [
+        'posx.jpg', 'negx.jpg',
+        'posy.jpg', 'negy.jpg',
+        'posz.jpg', 'negz.jpg'
+      ];
+    else if (urls.length !== 6)
+      throw new Error('aframe-cubemap-component: "urls" attribute must' +
+          'contain array of six elements, got ' + urls.length + ' instead');
 
-    // Code that follows is adapted from "Skybox and environment map in Three.js" by Roman Liutikov
+    // Code that follows is adapted from 'Skybox and environment map in Three.js' by Roman Liutikov
     // http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-threejs
 
     // Create loader, set folder path, and load cubemap textures
@@ -55,7 +65,7 @@ AFRAME.registerComponent('cubemap', {
       vertexShader: shader.vertexShader,
       uniforms: shader.uniforms,
       depthWrite: false,
-      side: THREE.BackSide
+      side: THREE.BackSide,
     });
 
     // Clone ShaderMaterial (necessary for multiple cubemaps)
