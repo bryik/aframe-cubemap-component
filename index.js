@@ -54,7 +54,10 @@ AFRAME.registerComponent('cubemap', {
     var loader = new THREE.CubeTextureLoader();
     loader.setPath(srcPath);
 
-    var cubemap = loader.load(urls);
+    var cubemap = loader.load(urls, function onLoad() {
+      el.emit('cubemapLoaded', undefined, false);
+    });
+
     cubemap.format = THREE.RGBFormat;
 
     var shader = THREE.ShaderLib['cube']; // init cube shader from built-in lib
