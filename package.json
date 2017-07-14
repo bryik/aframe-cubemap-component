@@ -30,14 +30,14 @@
   },
   "homepage": "https://github.com/bryik/aframe-cubemap-component#readme",
   "devDependencies": {
-    "aframe": "^0.2.0",
-    "browserify": "^12.0.1",
-    "browserify-css": "^0.8.3",
-    "budo": "^7.1.0",
+    "aframe": "^0.6.0",
+    "browserify": "^13.1.0",
+    "browserify-css": "^0.9.1",
+    "budo": "^9.0.0",
     "eslint": "^2.12.0",
     "ghpages": "0.0.3",
     "inquirer": "^0.12.0",
     "shelljs": "^0.6.0",
-    "webpack": "^1.12.9"
+    "webpack": "^2.5.1"
   }
 }
