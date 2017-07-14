@@ -1,5 +1,9 @@
 ## aframe-cubemap-component
 
+<p align="center">
+  <img src="preview.png"/>
+</p>
+
 An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 ### Properties
