@@ -1,0 +1,1 @@
+I believe I downloaded this from uschi0815 on the [Kerbal Space Program forum](http://forum.kerbalspaceprogram.com/index.php?/topic/128932-milky-way-panorama-as-skybox-for-texturereplacer/).
