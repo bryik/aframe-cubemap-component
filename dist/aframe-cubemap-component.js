@@ -90,6 +90,10 @@ AFRAME.registerComponent('cubemap', {
     ext: {
       type: 'string',
       default: 'jpg'
+    },
+    transparent: {
+      type: 'boolean',
+      default: false
     }
   },
 
@@ -125,7 +129,6 @@ AFRAME.registerComponent('cubemap', {
     loader.setPath(srcPath);
 
     var cubemap = loader.load(urls);
-    cubemap.format = THREE.RGBFormat;
 
     var shader = THREE.ShaderLib['cube']; // init cube shader from built-in lib
 
@@ -135,7 +138,8 @@ AFRAME.registerComponent('cubemap', {
       vertexShader: shader.vertexShader,
       uniforms: shader.uniforms,
       depthWrite: false,
-      side: THREE.BackSide
+      side: THREE.BackSide,
+      transparent: data.transparent
     });
 
     // Clone ShaderMaterial (necessary for multiple cubemaps)
