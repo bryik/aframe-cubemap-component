@@ -124,12 +124,6 @@ AFRAME.registerComponent('cubemap', {
     // Code that follows is adapted from "Skybox and environment map in Three.js" by Roman Liutikov
     // http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-threejs
 
-    // Create loader, set folder path, and load cubemap textures
-    var loader = new THREE.CubeTextureLoader();
-    loader.setPath(srcPath);
-
-    var cubemap = loader.load(urls);
-
     var shader = THREE.ShaderLib['cube']; // init cube shader from built-in lib
 
     // Create shader material
@@ -142,16 +136,22 @@ AFRAME.registerComponent('cubemap', {
       transparent: data.transparent
     });
 
-    // Clone ShaderMaterial (necessary for multiple cubemaps)
-    var skyBoxMaterial = skyBoxShader.clone();
-    skyBoxMaterial.uniforms['tCube'].value = cubemap; // Apply cubemap textures to shader uniforms
-
     // Set skybox dimensions
     var edgeLength = data.edgeLength;
     var skyBoxGeometry = new THREE.CubeGeometry(edgeLength, edgeLength, edgeLength);
 
-    // Set entity's object3D
-    el.setObject3D('cubemap', new THREE.Mesh(skyBoxGeometry, skyBoxMaterial));
+    // Create loader, set folder path, and load cubemap textures
+    var loader = new THREE.CubeTextureLoader();
+    loader.setPath(srcPath);
+    loader.load(urls, function(texture) {
+      // Clone ShaderMaterial (necessary for multiple cubemaps)
+      var skyBoxMaterial = skyBoxShader.clone();
+      skyBoxMaterial.uniforms['tCube'].value = texture; // Apply cubemap textures to shader uniforms
+
+      // Set entity's object3D
+      el.setObject3D('cubemap', new THREE.Mesh(skyBoxGeometry, skyBoxMaterial));
+    });
+
   },
 
   /**
