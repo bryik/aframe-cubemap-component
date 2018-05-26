@@ -21,19 +21,32 @@
     </a-scene>
 
     <script>
-      let skybox = document.querySelector('#skybox'),
+
+      let scene = document.querySelector('a-scene'),
+          skybox = document.querySelector('#skybox'),
           fadeIn = document.querySelector('#fadeIn'),
           fadeOut = document.querySelector('#fadeOut');
 
-      setTimeout(changeBackground, 2000);
+      // Fade back in when skybox finishes update.
+      skybox.addEventListener('object3dset', () => fadeIn.emit('fadeIn'));
 
       function changeBackground () {
         fadeOut.emit('fadeOut');
         fadeOut.addEventListener('animationend', function() {
           skybox.setAttribute('cubemap', 'folder:../assets/GoldenGateBridge2/');
-          fadeIn.emit('fadeIn');
         });
       }
+
+      if (scene.hasLoaded) {
+        run();
+      } else {
+        scene.addEventListener('loaded', run);
+      }
+
+      function run () {
+        setTimeout(changeBackground, 2000);
+      }
+
     </script>
   </body>
 </html>
