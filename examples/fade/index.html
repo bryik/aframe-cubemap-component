@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>A-Frame Cubemap Component - Fade</title>
+    <script src="../build.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-sphere radius="4000" material="color: black; side: back; transparent: true; opacity: 0">
+        <a-animation id="fadeOut" attribute="material.opacity"
+             dur="3000"
+             from="0.0"
+             to="1.0"
+             begin="fadeOut"></a-animation>
+       <a-animation id="fadeIn" attribute="material.opacity"
+            dur="3000"
+            from="1.0"
+            to="0.0"
+            begin="fadeIn"></a-animation>
+      </a-sphere>
+      <a-entity id="skybox" cubemap="folder: /assets/Yokohama3/"></a-entity>
+    </a-scene>
+
+    <script>
+      let skybox = document.querySelector('#skybox'),
+          fadeIn = document.querySelector('#fadeIn'),
+          fadeOut = document.querySelector('#fadeOut');
+
+      setTimeout(changeBackground, 2000);
+
+      function changeBackground () {
+        fadeOut.emit('fadeOut');
+        fadeOut.addEventListener('animationend', function() {
+          skybox.setAttribute('cubemap', 'folder: /assets/GoldenGateBridge2/');
+          fadeIn.emit('fadeIn');
+        });
+      }
+    </script>
+  </body>
+</html>
