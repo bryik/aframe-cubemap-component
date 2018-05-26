@@ -25,13 +25,15 @@
           fadeIn = document.querySelector('#fadeIn'),
           fadeOut = document.querySelector('#fadeOut');
 
+      // Fade back in when skybox finishes update.
+      skybox.addEventListener('object3dset', () => fadeIn.emit('fadeIn'));
+
       setTimeout(changeBackground, 2000);
 
       function changeBackground () {
         fadeOut.emit('fadeOut');
         fadeOut.addEventListener('animationend', function() {
           skybox.setAttribute('cubemap', 'folder: /assets/GoldenGateBridge2/');
-          fadeIn.emit('fadeIn');
         });
       }
     </script>
