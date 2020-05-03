@@ -5,48 +5,56 @@
   </head>
   <body>
     <a-scene>
-      <a-sphere radius="4000" material="color: black; side: back; transparent: true; opacity: 0">
-        <a-animation id="fadeOut" attribute="material.opacity"
-             dur="3000"
-             from="0.0"
-             to="1.0"
-             begin="fadeOut"></a-animation>
-       <a-animation id="fadeIn" attribute="material.opacity"
-            dur="3000"
-            from="1.0"
-            to="0.0"
-            begin="fadeIn"></a-animation>
+      <a-sphere
+        id="sphere"
+        radius="4000"
+        material="color: black; side: back; transparent: true; opacity: 1"
+        animation__fadeIn="property: material.opacity; from: 1.0; to: 0.0; startEvents: fadeIn"
+        animation__fadeOut="property: material.opacity; from: 0.0; to: 1.0; startEvents: fadeOut"
+      >
       </a-sphere>
-      <a-entity id="skybox" cubemap="folder:../assets/Yokohama3/"></a-entity>
+      <a-entity id="skybox" cubemap="folder: /assets/Yokohama3/"></a-entity>
     </a-scene>
 
     <script>
+      let scene = document.querySelector("a-scene"),
+        skybox = document.querySelector("#skybox"),
+        sphere = document.querySelector("#sphere"),
+        cubemapPath = "folder: /assets/Yokohama3/";
 
-      let scene = document.querySelector('a-scene'),
-          skybox = document.querySelector('#skybox'),
-          fadeIn = document.querySelector('#fadeIn'),
-          fadeOut = document.querySelector('#fadeOut');
+      function toggleBackground() {
+        cubemapPath =
+          cubemapPath === "folder: /assets/Yokohama3/"
+            ? "folder:../assets/GoldenGateBridge2/"
+            : "folder: /assets/Yokohama3/";
 
-      // Fade back in when skybox finishes update.
-      skybox.addEventListener('object3dset', () => fadeIn.emit('fadeIn'));
-
-      function changeBackground () {
-        fadeOut.emit('fadeOut');
-        fadeOut.addEventListener('animationend', function() {
-          skybox.setAttribute('cubemap', 'folder:../assets/GoldenGateBridge2/');
+        sphere.emit("fadeOut");
+        sphere.addEventListener("animationcomplete", function (event) {
+          if (event.detail.name === "animation__fadeout") {
+            skybox.setAttribute("cubemap", cubemapPath);
+            sphere.emit("fadeIn");
+          }
         });
       }
 
       if (scene.hasLoaded) {
         run();
       } else {
-        scene.addEventListener('loaded', run);
+        scene.addEventListener("loaded", run);
       }
 
-      function run () {
-        setTimeout(changeBackground, 2000);
-      }
+      function run() {
+        // Cubemap has loaded, so fade in.
+        sphere.emit("fadeIn");
 
+        // Toggle the background.
+        toggleBackground();
+
+        // Toggle the background back and forth every 5 seconds.
+        skybox.addEventListener("object3dset", () => {
+          setTimeout(toggleBackground, 5000);
+        });
+      }
     </script>
   </body>
 </html>
