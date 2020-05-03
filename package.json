@@ -1,6 +1,6 @@
 {
   "name": "aframe-cubemap-component",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "Cubemap component for A-Frame.",
   "main": "index.js",
   "scripts": {
