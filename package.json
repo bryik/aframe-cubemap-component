@@ -35,7 +35,7 @@
     "browserify-css": "^0.9.1",
     "budo": "^9.0.0",
     "envify": "^4.1.0",
-    "eslint": "^2.12.0",
+    "eslint": "^6.8.0",
     "ghpages": "0.0.3",
     "inquirer": "^0.12.0",
     "shelljs": "^0.6.0",
