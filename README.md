@@ -22,17 +22,17 @@ By default, the height, width, and depth of the skybox are set to 5000. In other
 Attach the component to an entity using the path to the folder holding your cubemap as the attribute.
 
 ```html
-  <a-entity cubemap="folder: /assets/Yokohama3/"></a-entity>
+<a-entity cubemap="folder: /assets/Yokohama3/"></a-entity>
 ```
 
 Inside the folder, the component assumes the following naming scheme:
 
 ```javascript
-  var urls = [
-    'posx.jpg', 'negx.jpg',
-    'posy.jpg', 'negy.jpg',
-    'posz.jpg', 'negz.jpg'
-  ];
+const urls = [
+  'posx.jpg', 'negx.jpg',
+  'posy.jpg', 'negy.jpg',
+  'posz.jpg', 'negz.jpg'
+];
 ```
 
 **Note**: if your images are not jpgs, you must use the `ext` component property to specify the extension (e.g. `cubemap="ext: png"`). To enable transparency on pngs, set `transparent: true`.
