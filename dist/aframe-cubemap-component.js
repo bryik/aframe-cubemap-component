@@ -146,7 +146,14 @@ AFRAME.registerComponent('cubemap', {
     loader.load(urls, function(texture) {
       // Clone ShaderMaterial (necessary for multiple cubemaps)
       var skyBoxMaterial = skyBoxShader.clone();
-      skyBoxMaterial.uniforms['tCube'].value = texture; // Apply cubemap textures to shader uniforms
+      // Threejs seems to have removed the 'tCube' uniform.
+      // Workaround from: https://stackoverflow.com/a/59454999/6591491
+      Object.defineProperty(skyBoxMaterial, "envMap", {
+        get: function () {
+          return this.uniforms.envMap.value;
+        },
+      });
+      skyBoxMaterial.uniforms["envMap"].value = texture; // Apply cubemap textures to shader uniforms
 
       // Set entity's object3D
       el.setObject3D('cubemap', new THREE.Mesh(skyBoxGeometry, skyBoxMaterial));
