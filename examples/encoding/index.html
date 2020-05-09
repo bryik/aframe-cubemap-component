@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>A-Frame Cubemap Component - Yokohama Encoding</title>
+    <script src="../build.js"></script>
+  </head>
+  <body>
+    <!--
+    With colorManagement: true, this example looks identical to the Yokohama
+    example. With colorManagement: false, Yokohama appears too dark.
+    -->
+    <a-scene renderer="colorManagement: true">
+      <a-entity
+        cubemap="folder: /assets/Yokohama3/; encoding: sRGBEncoding"
+      ></a-entity>
+    </a-scene>
+  </body>
+</html>

@@ -8,12 +8,13 @@ An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 ### Properties
 
-|   Property   |               Description               | Default Value |
-|:------------:|:---------------------------------------:|:-------------:|
-|    folder    | Path to the folder holding your cubemap |      none     |
-|  edgeLength  |  Controls the dimensions of the skybox  |      5000     |
-|     ext      |           The image extension           |      jpg      |
-|  transparent |       Enable transparency for png       |     false     |
+|  Property   |               Description               | Default Value  |
+| :---------: | :-------------------------------------: | :------------: |
+|   folder    | Path to the folder holding your cubemap |      none      |
+| edgeLength  |  Controls the dimensions of the skybox  |      5000      |
+|     ext     |           The image extension           |      jpg       |
+| transparent |       Enable transparency for png       |     false      |
+|  encoding   |    The [texture encoding][0] to use     | LinearEncoding |
 
 By default, the height, width, and depth of the skybox are set to 5000. In other words, the dimensions of the skybox are 5000x5000x5000.
 
@@ -28,6 +29,7 @@ Attach the component to an entity using the path to the folder holding your cube
 Inside the folder, the component assumes the following naming scheme:
 
 ```javascript
+// prettier-ignore
 const urls = [
   'posx.jpg', 'negx.jpg',
   'posy.jpg', 'negy.jpg',
@@ -44,7 +46,7 @@ The Yokohama cubemap texture is the work of [Emil Persson, aka Humus](http://www
 To modify the size of the resulting skybox, use the edgeLength property.
 
 ```html
-  <a-entity cubemap="folder: /assets/Yokohama3/; edgeLength: 1000"></a-entity>
+<a-entity cubemap="folder: /assets/Yokohama3/; edgeLength: 1000"></a-entity>
 ```
 
 #### Browser Installation
@@ -64,3 +66,5 @@ Install and use by directly including the [browser files](dist):
   </a-scene>
 </body>
 ```
+
+[0]: https://threejs.org/docs/index.html#api/en/textures/Texture.encoding
