@@ -8,12 +8,13 @@ An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 ### Properties
 
-|  Property   |               Description               | Default Value |
-| :---------: | :-------------------------------------: | :-----------: |
-|   folder    | Path to the folder holding your cubemap |     none      |
-| edgeLength  |  Controls the dimensions of the skybox  |     5000      |
-|     ext     |           The image extension           |      jpg      |
-| transparent |       Enable transparency for png       |     false     |
+|  Property   |               Description               | Default Value  |
+| :---------: | :-------------------------------------: | :------------: |
+|   folder    | Path to the folder holding your cubemap |      none      |
+| edgeLength  |  Controls the dimensions of the skybox  |      5000      |
+|     ext     |           The image extension           |      jpg       |
+| transparent |       Enable transparency for png       |     false      |
+|  encoding   |    The [texture encoding][0] to use     | LinearEncoding |
 
 By default, the height, width, and depth of the skybox are set to 5000. In other words, the dimensions of the skybox are 5000x5000x5000.
 
@@ -65,3 +66,5 @@ Install and use by directly including the [browser files](dist):
   </a-scene>
 </body>
 ```
+
+[0]: https://threejs.org/docs/index.html#api/en/textures/Texture.encoding
