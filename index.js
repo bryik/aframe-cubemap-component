@@ -25,6 +25,9 @@ AFRAME.registerComponent("cubemap", {
       type: "boolean",
       default: false,
     },
+    encoding: {
+      default: "LinearEncoding",
+    },
   },
 
   /**
@@ -74,6 +77,16 @@ AFRAME.registerComponent("cubemap", {
     var loader = new THREE.CubeTextureLoader();
     loader.setPath(srcPath);
     loader.load(urls, function (texture) {
+      // Set texture encoding.
+      let encoding = THREE[data.encoding];
+      if (!encoding) {
+        console.warn(
+          `Unknown texture encoding: ${value}. Defaulting to THREE.LinearEncoding`
+        );
+        encoding = THREE.LinearEncoding;
+      }
+      texture.encoding = encoding;
+
       // Clone ShaderMaterial (necessary for multiple cubemaps)
       var skyBoxMaterial = skyBoxShader.clone();
       // Threejs seems to have removed the 'tCube' uniform.
