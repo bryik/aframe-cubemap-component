@@ -59,7 +59,7 @@ Install and use by directly including the [browser files](dist):
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-cubemap-component@1.0.0/dist/aframe-cubemap-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-cubemap-component@2.0.0/dist/aframe-cubemap-component.min.js"></script>
 </head>
 
 <body>
