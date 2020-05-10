@@ -103,6 +103,13 @@ AFRAME.registerComponent("cubemap", {
       this.loader.load(urls, onTextureLoad.bind(this));
 
       function onTextureLoad(texture) {
+        if (srcPath !== this.data.folder) {
+          // The texture that just finished loading no longer matches the folder
+          // set on this component. This can happen when the user calls setAttribute()
+          // to change folders multiple times in quick succession.
+          texture.dispose();
+          return;
+        }
         // Have the renderer system set texture encoding as in A-Frame core.
         // https://github.com/bryik/aframe-cubemap-component/issues/13#issuecomment-626238202
         rendererSystem.applyColorCorrection(texture);
