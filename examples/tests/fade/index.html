@@ -1,10 +1,10 @@
 <html>
   <head>
     <title>A-Frame Cubemap Component - Fade</title>
-    <script src="../build.js"></script>
+    <script src="../../build.js"></script>
   </head>
   <body>
-    <a-scene>
+    <a-scene stats>
       <a-sphere
         id="sphere"
         radius="4000"
@@ -25,7 +25,7 @@
       function toggleBackground() {
         cubemapPath =
           cubemapPath === "folder: /assets/Yokohama3/"
-            ? "folder:../assets/GoldenGateBridge2/"
+            ? "folder: /assets/GoldenGateBridge2/"
             : "folder: /assets/Yokohama3/";
 
         sphere.emit("fadeOut");
@@ -51,7 +51,7 @@
         toggleBackground();
 
         // Toggle the background back and forth every 5 seconds.
-        skybox.addEventListener("object3dset", () => {
+        skybox.addEventListener("cubemapLoaded", () => {
           setTimeout(toggleBackground, 5000);
         });
       }
