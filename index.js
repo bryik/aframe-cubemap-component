@@ -7,6 +7,10 @@ if (typeof AFRAME === "undefined") {
 
 /**
  * Cubemap component for A-Frame.
+ *
+ * Adapted from "Skybox and environment map in Three.js" by Roman Liutikov
+ * https://web.archive.org/web/20160206163422/https://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-threejs
+ *
  */
 AFRAME.registerComponent("cubemap", {
   schema: {
@@ -28,71 +32,94 @@ AFRAME.registerComponent("cubemap", {
   },
 
   /**
-   * Called when component is attached and when component data changes.
-   * Generally modifies the entity based on the data.
+   * Called once when the component is initialized.
+   * Used to set up initial state and instantiate variables.
    */
-  update: function (oldData) {
+  init: function () {
     // entity data
-    var el = this.el;
-    var data = this.data;
-    var rendererSystem = el.sceneEl.systems.renderer;
+    const el = this.el;
+    const data = this.data;
 
-    // Path to the folder containing the 6 cubemap images
-    var srcPath = data.folder;
+    // A Cubemap can be rendered as a mesh composed of a CubeGeometry and
+    // ShaderMaterial. First, construct the geometry.
+    const edgeLength = data.edgeLength;
+    this.geometry = new THREE.BoxBufferGeometry(
+      edgeLength,
+      edgeLength,
+      edgeLength
+    );
 
-    // Cubemap image files must follow this naming scheme
-    // from: http://threejs.org/docs/index.html#Reference/Textures/CubeTexture
-    var urls = ["posx", "negx", "posy", "negy", "posz", "negz"];
-    // Apply extension
-    urls = urls.map(function (val) {
-      return val + "." + data.ext;
-    });
-
-    // Code that follows is adapted from "Skybox and environment map in Three.js" by Roman Liutikov
-    // http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-threejs
-
-    var shader = THREE.ShaderLib["cube"]; // init cube shader from built-in lib
-
-    // Create shader material
-    var skyBoxShader = new THREE.ShaderMaterial({
+    // Now for the ShaderMaterial.
+    const shader = THREE.ShaderLib["cube"];
+    // Note: cloning the material is necessary to prevent the cube shader's
+    // uniforms from being mutated. If the material was not cloned, all cubemaps
+    // in the scene would share the same uniforms (and look identical).
+    this.material = new THREE.ShaderMaterial({
       fragmentShader: shader.fragmentShader,
       vertexShader: shader.vertexShader,
       uniforms: shader.uniforms,
       depthWrite: false,
       side: THREE.BackSide,
       transparent: data.transparent,
+    }).clone();
+    // Threejs seems to have removed the 'tCube' uniform.
+    // Workaround from: https://stackoverflow.com/a/59454999/6591491
+    Object.defineProperty(this.material, "envMap", {
+      get: function () {
+        return this.uniforms.envMap.value;
+      },
+    });
+    // A dummy texture is needed (otherwise the shader will be invalid and spew
+    // a million errors)
+    this.material.uniforms["envMap"].value = new THREE.Texture();
+    this.loader = new THREE.CubeTextureLoader();
+
+    // We can create the mesh now and update the material with a texture later on
+    // in the update lifecycle handler.
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    el.setObject3D("cubemap", this.mesh);
+  },
+
+  /**
+   * Called when component is attached and when component data changes.
+   * Generally modifies the entity based on the data.
+   */
+  update: function (oldData) {
+    // entity data
+    const el = this.el;
+    const data = this.data;
+    const rendererSystem = el.sceneEl.systems.renderer;
+
+    // Load textures.
+    // Path to the folder containing the 6 cubemap images
+    const srcPath = data.folder;
+    // Cubemap image files must follow this naming scheme
+    // from: http://threejs.org/docs/index.html#Reference/Textures/CubeTexture
+    let urls = ["posx", "negx", "posy", "negy", "posz", "negz"];
+    // Apply extension
+    urls = urls.map(function (val) {
+      return val + "." + data.ext;
     });
 
-    // Set skybox dimensions
-    var edgeLength = data.edgeLength;
-    var skyBoxGeometry = new THREE.CubeGeometry(
-      edgeLength,
-      edgeLength,
-      edgeLength
-    );
+    // Set folder path, and load cubemap textures
+    this.loader.setPath(srcPath);
+    this.loader.load(urls, onTextureLoad.bind(this));
 
-    // Create loader, set folder path, and load cubemap textures
-    var loader = new THREE.CubeTextureLoader();
-    loader.setPath(srcPath);
-    loader.load(urls, function (texture) {
+    function onTextureLoad(texture) {
       // Have the renderer system set texture encoding as in A-Frame core.
       // https://github.com/bryik/aframe-cubemap-component/issues/13#issuecomment-626238202
       rendererSystem.applyColorCorrection(texture);
 
-      // Clone ShaderMaterial (necessary for multiple cubemaps)
-      var skyBoxMaterial = skyBoxShader.clone();
-      // Threejs seems to have removed the 'tCube' uniform.
-      // Workaround from: https://stackoverflow.com/a/59454999/6591491
-      Object.defineProperty(skyBoxMaterial, "envMap", {
-        get: function () {
-          return this.uniforms.envMap.value;
-        },
-      });
-      skyBoxMaterial.uniforms["envMap"].value = texture; // Apply cubemap textures to shader uniforms
+      // Apply cubemap texture to shader uniforms and dispose of the old texture.
+      const oldTexture = this.material.uniforms["envMap"].value;
+      this.material.uniforms["envMap"].value = texture;
+      if (oldTexture) {
+        oldTexture.dispose();
+      }
 
-      // Set entity's object3D
-      el.setObject3D("cubemap", new THREE.Mesh(skyBoxGeometry, skyBoxMaterial));
-    });
+      // Tell the world that the cubemap texture has loaded.
+      el.emit("cubemapLoaded");
+    }
   },
 
   /**
@@ -100,6 +127,9 @@ AFRAME.registerComponent("cubemap", {
    * Generally undoes all modifications to the entity.
    */
   remove: function () {
+    this.geometry.dispose();
+    this.material.uniforms["envMap"].value.dispose();
+    this.material.dispose();
     this.el.removeObject3D("cubemap");
   },
 });
