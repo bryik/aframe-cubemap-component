@@ -1,18 +1,17 @@
 <html>
   <head>
     <title>A-Frame Cubemap Component - Change Cubemap Test</title>
-    <script src="../build.js"></script>
+    <script src="../../build.js"></script>
   </head>
   <body>
-    <a-scene>
+    <a-scene stats>
       <a-entity id="skybox" cubemap="folder: /assets/Yokohama3/"></a-entity>
-      <!--<a-entity position="5 0 -5" cubemap="folder: /assets/GoldenGateBridge2/; edgeLength: 5"></a-entity>-->
     </a-scene>
     <script type="text/javascript">
       setTimeout(changeBackground, 5000);
 
       function changeBackground() {
-        var skybox = document.querySelector("#skybox");
+        const skybox = document.querySelector("#skybox");
         skybox.setAttribute("cubemap", "folder: /assets/GoldenGateBridge2/");
       }
     </script>
