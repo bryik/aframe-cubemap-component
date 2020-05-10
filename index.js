@@ -25,9 +25,6 @@ AFRAME.registerComponent("cubemap", {
       type: "boolean",
       default: false,
     },
-    encoding: {
-      default: "LinearEncoding",
-    },
   },
 
   /**
@@ -38,6 +35,7 @@ AFRAME.registerComponent("cubemap", {
     // entity data
     var el = this.el;
     var data = this.data;
+    var rendererSystem = el.sceneEl.systems.renderer;
 
     // Path to the folder containing the 6 cubemap images
     var srcPath = data.folder;
@@ -77,15 +75,9 @@ AFRAME.registerComponent("cubemap", {
     var loader = new THREE.CubeTextureLoader();
     loader.setPath(srcPath);
     loader.load(urls, function (texture) {
-      // Set texture encoding.
-      let encoding = THREE[data.encoding];
-      if (!encoding) {
-        console.warn(
-          `Unknown texture encoding: ${value}. Defaulting to THREE.LinearEncoding`
-        );
-        encoding = THREE.LinearEncoding;
-      }
-      texture.encoding = encoding;
+      // Have the renderer system set texture encoding as in A-Frame core.
+      // https://github.com/bryik/aframe-cubemap-component/issues/13#issuecomment-626238202
+      rendererSystem.applyColorCorrection(texture);
 
       // Clone ShaderMaterial (necessary for multiple cubemaps)
       var skyBoxMaterial = skyBoxShader.clone();
