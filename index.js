@@ -40,14 +40,9 @@ AFRAME.registerComponent("cubemap", {
     const el = this.el;
     const data = this.data;
 
-    // A Cubemap can be rendered as a mesh composed of a CubeGeometry and
-    // ShaderMaterial. First, construct the geometry.
-    const edgeLength = data.edgeLength;
-    this.geometry = new THREE.BoxBufferGeometry(
-      edgeLength,
-      edgeLength,
-      edgeLength
-    );
+    // A Cubemap can be rendered as a mesh composed of a BoxBufferGeometry and
+    // ShaderMaterial. EdgeLength will scale the mesh
+    this.geometry = new THREE.BoxBufferGeometry(1, 1, 1);
 
     // Now for the ShaderMaterial.
     const shader = THREE.ShaderLib["cube"];
@@ -77,6 +72,7 @@ AFRAME.registerComponent("cubemap", {
     // We can create the mesh now and update the material with a texture later on
     // in the update lifecycle handler.
     this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.scale.set(data.edgeLength, data.edgeLength, data.edgeLength);
     el.setObject3D("cubemap", this.mesh);
   },
 
@@ -90,35 +86,42 @@ AFRAME.registerComponent("cubemap", {
     const data = this.data;
     const rendererSystem = el.sceneEl.systems.renderer;
 
-    // Load textures.
-    // Path to the folder containing the 6 cubemap images
-    const srcPath = data.folder;
-    // Cubemap image files must follow this naming scheme
-    // from: http://threejs.org/docs/index.html#Reference/Textures/CubeTexture
-    let urls = ["posx", "negx", "posy", "negy", "posz", "negz"];
-    // Apply extension
-    urls = urls.map(function (val) {
-      return val + "." + data.ext;
-    });
+    if (data.edgeLength !== oldData.edgeLength) {
+      // Update the size of the skybox.
+      this.mesh.scale.set(data.edgeLength, data.edgeLength, data.edgeLength);
+    }
 
-    // Set folder path, and load cubemap textures
-    this.loader.setPath(srcPath);
-    this.loader.load(urls, onTextureLoad.bind(this));
+    if (data.ext !== oldData.ext || data.folder !== oldData.folder) {
+      // Load textures.
+      // Path to the folder containing the 6 cubemap images
+      const srcPath = data.folder;
+      // Cubemap image files must follow this naming scheme
+      // from: http://threejs.org/docs/index.html#Reference/Textures/CubeTexture
+      let urls = ["posx", "negx", "posy", "negy", "posz", "negz"];
+      // Apply extension
+      urls = urls.map(function (val) {
+        return val + "." + data.ext;
+      });
 
-    function onTextureLoad(texture) {
-      // Have the renderer system set texture encoding as in A-Frame core.
-      // https://github.com/bryik/aframe-cubemap-component/issues/13#issuecomment-626238202
-      rendererSystem.applyColorCorrection(texture);
+      // Set folder path, and load cubemap textures
+      this.loader.setPath(srcPath);
+      this.loader.load(urls, onTextureLoad.bind(this));
 
-      // Apply cubemap texture to shader uniforms and dispose of the old texture.
-      const oldTexture = this.material.uniforms["envMap"].value;
-      this.material.uniforms["envMap"].value = texture;
-      if (oldTexture) {
-        oldTexture.dispose();
+      function onTextureLoad(texture) {
+        // Have the renderer system set texture encoding as in A-Frame core.
+        // https://github.com/bryik/aframe-cubemap-component/issues/13#issuecomment-626238202
+        rendererSystem.applyColorCorrection(texture);
+
+        // Apply cubemap texture to shader uniforms and dispose of the old texture.
+        const oldTexture = this.material.uniforms["envMap"].value;
+        this.material.uniforms["envMap"].value = texture;
+        if (oldTexture) {
+          oldTexture.dispose();
+        }
+
+        // Tell the world that the cubemap texture has loaded.
+        el.emit("cubemapLoaded");
       }
-
-      // Tell the world that the cubemap texture has loaded.
-      el.emit("cubemapLoaded");
     }
   },
 
