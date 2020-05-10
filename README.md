@@ -8,14 +8,19 @@ An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 ### Properties
 
-|  Property   |               Description               | Default Value |
-| :---------: | :-------------------------------------: | :-----------: |
-|   folder    | Path to the folder holding your cubemap |     none      |
-| edgeLength  |  Controls the dimensions of the skybox  |     5000      |
-|     ext     |           The image extension           |      jpg      |
-| transparent |       Enable transparency for png       |     false     |
+|  Property  |               Description               | Default Value |
+| :--------: | :-------------------------------------: | :-----------: |
+|   folder   | Path to the folder holding your cubemap |     none      |
+| edgeLength |  Controls the dimensions of the skybox  |     5000      |
+|    ext     |           The image extension           |      jpg      |
 
 By default, the height, width, and depth of the skybox are set to 5000. In other words, the dimensions of the skybox are 5000x5000x5000.
+
+### Events
+
+|       Name        |                 Description                 |
+| :---------------: | :-----------------------------------------: |
+| cubeTextureLoaded | Emitted when a texture has finished loading |
 
 ### Usage
 
@@ -35,8 +40,6 @@ const urls = [
   'posz.jpg', 'negz.jpg'
 ];
 ```
-
-**Note**: if your images are not jpgs, you must use the `ext` component property to specify the extension (e.g. `cubemap="ext: png"`). To enable transparency on pngs, set `transparent: true`.
 
 This is the scheme used by Three.js's [CubeTexture](http://threejs.org/docs/index.html#Reference/Textures/CubeTexture). If your cubemap images do not follow this scheme, you will need to rename them (or fork this repo and alter the above in index.js).
 
