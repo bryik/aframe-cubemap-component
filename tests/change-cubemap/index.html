@@ -5,14 +5,17 @@
   </head>
   <body>
     <a-scene stats>
-      <a-entity id="skybox" cubemap="folder:../assets/Yokohama3/"></a-entity>
+      <a-entity id="skybox" cubemap="folder:../../assets/Yokohama3/"></a-entity>
     </a-scene>
     <script type="text/javascript">
       setTimeout(changeBackground, 5000);
 
       function changeBackground() {
         const skybox = document.querySelector("#skybox");
-        skybox.setAttribute("cubemap", "folder:../assets/GoldenGateBridge2/");
+        skybox.setAttribute(
+          "cubemap",
+          "folder:../../assets/GoldenGateBridge2/"
+        );
       }
     </script>
   </body>
