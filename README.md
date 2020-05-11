@@ -16,6 +16,8 @@ An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 By default, the height, width, and depth of the skybox are set to 5000. In other words, the dimensions of the skybox are 5000x5000x5000.
 
+**Note:** `folder` can also be an ID to an `<a-cubemap>` asset. See `./examples/tests/a-assets/` for an example.
+
 ### Events
 
 |       Name        |                 Description                 |
