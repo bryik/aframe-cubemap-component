@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>A-Frame Cubemap Component - a-assets</title>
+    <script src="../../build.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-cubemap id="sky">
+          <!--The order of these images is important!-->
+          <!-- https://threejs.org/docs/index.html#api/en/textures/CubeTexture -->
+          <img src="../../assets/Yokohama3/posx.jpg" />
+          <img src="../../assets/Yokohama3/negx.jpg" />
+          <img src="../../assets/Yokohama3/posy.jpg" />
+          <img src="../../assets/Yokohama3/negy.jpg" />
+          <img src="../../assets/Yokohama3/posz.jpg" />
+          <img src="../../assets/Yokohama3/negz.jpg" />
+        </a-cubemap>
+      </a-assets>
+      <a-entity cubemap="folder:#sky"></a-entity>
+    </a-scene>
+  </body>
+</html>
