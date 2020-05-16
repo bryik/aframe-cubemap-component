@@ -8,15 +8,15 @@ An [A-Frame](https://aframe.io) component for creating a skybox from a cubemap.
 
 ### Properties
 
-|  Property  |               Description               | Default Value |
-| :--------: | :-------------------------------------: | :-----------: |
-|   folder   | Path to the folder holding your cubemap |     none      |
-| edgeLength |  Controls the dimensions of the skybox  |     5000      |
-|    ext     |           The image extension           |      jpg      |
+|  Property  |                      Description                      | Default Value |
+| :--------: | :---------------------------------------------------: | :-----------: |
+|   folder   | Path to the folder holding your cubemap or a selector |     none      |
+| edgeLength |         Controls the dimensions of the skybox         |     5000      |
+|    ext     |                  The image extension                  |      jpg      |
 
 By default, the height, width, and depth of the skybox are set to 5000. In other words, the dimensions of the skybox are 5000x5000x5000.
 
-**Note:** `folder` can also be an ID to an `<a-cubemap>` asset. See `./examples/tests/a-assets/` for an example.
+**Note:** `folder` can also be an ID to an `<a-cubemap>` asset. See `./examples/tests/a-assets/`.
 
 ### Events
 
