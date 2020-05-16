@@ -159,19 +159,38 @@ AFRAME.registerComponent("cubemap", {
     }
 
     if (data.ext !== oldData.ext || data.folder !== oldData.folder) {
-      // Load textures.
-      // Path to the folder containing the 6 cubemap images
-      const srcPath = data.folder;
-      // Cubemap image files must follow this naming scheme
-      // from: http://threejs.org/docs/index.html#Reference/Textures/CubeTexture
-      var urls = ["posx", "negx", "posy", "negy", "posz", "negz"];
-      // Apply extension
-      urls = urls.map(function (val) {
-        return val + "." + data.ext;
-      });
+      // File extension and/or folder property have changed, so reload textures.
 
-      // Set folder path, and load cubemap textures
-      this.loader.setPath(srcPath);
+      // Determine the URLs to load.
+      var urls;
+      // srcPath is either a literal path to a folder, or a selector to an <a-cubemap>
+      // asset.
+      const srcPath = data.folder;
+      if (srcPath && srcPath[0] === "#") {
+        // srcPath is a selector to an <a-cubemap> asset
+        const assetEl = document.querySelector(srcPath);
+        if (assetEl === null) {
+          // Bail out
+          console.error(
+            "cubemap component given a selector to a non-existent asset:",
+            srcPath
+          );
+          return;
+        }
+        urls = assetEl.srcs;
+      } else {
+        // srcPath is a folder path
+        this.loader.setPath(srcPath);
+        // Cubemap image files must follow this naming scheme
+        // from: https://threejs.org/docs/index.html#api/en/textures/CubeTexture
+        urls = ["posx", "negx", "posy", "negy", "posz", "negz"];
+        // Apply extension
+        urls = urls.map(function (val) {
+          return val + "." + data.ext;
+        });
+      }
+
+      // Load textures
       this.loader.load(urls, onTextureLoad.bind(this));
 
       function onTextureLoad(texture) {
