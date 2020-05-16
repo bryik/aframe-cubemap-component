@@ -100,7 +100,8 @@ AFRAME.registerComponent("cubemap", {
         if (assetEl === null) {
           // Bail out
           console.error(
-            `cubemap component given a selector to a non-existent asset: ${srcPath}`
+            "cubemap component given a selector to a non-existent asset:",
+            srcPath
           );
           return;
         }
