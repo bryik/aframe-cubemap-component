@@ -4,20 +4,53 @@
     <script src="../../build.js"></script>
   </head>
   <body>
-    <a-scene>
+    <a-scene stats>
       <a-assets>
-        <a-cubemap id="sky">
+        <a-cubemap id="yokohama">
           <!--The order of these images is important!-->
-          <!-- https://threejs.org/docs/index.html#api/en/textures/CubeTexture -->
-          <img src="../../assets/Yokohama3/posx.jpg" />
-          <img src="../../assets/Yokohama3/negx.jpg" />
-          <img src="../../assets/Yokohama3/posy.jpg" />
-          <img src="../../assets/Yokohama3/negy.jpg" />
-          <img src="../../assets/Yokohama3/posz.jpg" />
-          <img src="../../assets/Yokohama3/negz.jpg" />
+          <!--posx-->
+          <img src="https://i.imgur.com/t3ixTMn.jpg" />
+          <!--negx-->
+          <img src="https://i.imgur.com/cyrsG1a.jpg" />
+          <!--posy-->
+          <img src="https://i.imgur.com/hNa2WA4.jpg?1" />
+          <!--negy-->
+          <img src="https://i.imgur.com/XX4cRwQ.jpg" />
+          <!--posz-->
+          <img src="https://i.imgur.com/vPRQ9Bc.jpg" />
+          <!--negz-->
+          <img src="https://i.imgur.com/fDRkOEl.jpg" />
+        </a-cubemap>
+        <a-cubemap id="goldenGate">
+          <!--The order of these images is important!-->
+          <img src="../../assets/GoldenGatebridge2/posx.jpg" />
+          <img src="../../assets/GoldenGatebridge2/negx.jpg" />
+          <img src="../../assets/GoldenGatebridge2/posy.jpg" />
+          <img src="../../assets/GoldenGatebridge2/negy.jpg" />
+          <img src="../../assets/GoldenGatebridge2/posz.jpg" />
+          <img src="../../assets/GoldenGatebridge2/negz.jpg" />
         </a-cubemap>
       </a-assets>
-      <a-entity cubemap="folder:#sky"></a-entity>
+      <a-entity id="skybox" cubemap="folder:#yokohama"></a-entity>
     </a-scene>
+    <!--A button and a script to switch panoramas.-->
+    <button
+      id="switchButton"
+      style="position: absolute; top: 10px; right: 10px;"
+    >
+      Switch
+    </button>
+    <script>
+      const switchButton = document.querySelector("#switchButton");
+      switchButton.addEventListener("click", switchPanoramas);
+
+      let panorama = "yokohama";
+
+      function switchPanoramas() {
+        const skybox = document.querySelector("#skybox");
+        panorama = panorama === "yokohama" ? "goldenGate" : "yokohama";
+        skybox.setAttribute("cubemap", `folder:#${panorama}`);
+      }
+    </script>
   </body>
 </html>
