@@ -90,7 +90,7 @@ AFRAME.registerComponent("cubemap", {
       // File extension and/or folder property have changed, so reload textures.
 
       // Determine the URLs to load.
-      var urls;
+      let urls;
       // srcPath is either a literal path to a folder, or a selector to an <a-cubemap>
       // asset.
       const srcPath = data.folder;
