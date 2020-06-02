@@ -1,7 +1,0 @@
-{
-    "extends": "semistandard",
-    "installedESLint": true,
-    "env": {
-      "commonjs": true
-    }
-}
