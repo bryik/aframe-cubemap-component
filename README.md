@@ -70,3 +70,9 @@ Install and use by directly including the [browser files](dist):
   </a-scene>
 </body>
 ```
+
+## FAQ
+
+### Can this component display stereoscopic cubemaps?
+
+No. However, it's not too difficult to achieve this with a little bit of JavaScript. The trick is to split a stereo cubemap into two separate cubemaps, one for each eye, and render them with separate entities. Then use JS to fetch each entity's `object3D` and set the left to layer 1 and the right to layer 2. [Here is an example](https://github.com/bryik/aframe-metaverse-contest/blob/gh-pages/examples/fushimi-inari.html#L31).
