@@ -34,7 +34,7 @@
     "budo": "^11.6.3",
     "envify": "^4.1.0",
     "prettier": "^2.0.5",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.11"
   }
 }
