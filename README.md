@@ -76,3 +76,34 @@ Install and use by directly including the [browser files](dist):
 ### Can this component display stereoscopic cubemaps?
 
 No. However, it's not too difficult to achieve this with a little bit of JavaScript. The trick is to split a stereo cubemap into two separate cubemaps, one for each eye, and render them with separate entities. Then use JS to fetch each entity's `object3D` and set the left to layer 1 and the right to layer 2. [Here is an example](https://github.com/bryik/aframe-metaverse-contest/blob/gh-pages/examples/fushimi-inari.html#L31).
+
+## Local Development
+
+Clone the repo and `cd` into it
+
+```bash
+git clone git@github.com:bryik/aframe-cubemap-component.git
+cd aframe-cubemap-component
+```
+
+Install dependencies:
+
+```bash
+npm i
+```
+
+To run the examples locally:
+
+```bash
+npm run dev
+```
+
+This should start a live reloading local dev server. To stop the server, hit `CONTROL-C`.
+
+To generate a minified bundle: `npm run dist`.
+
+### Contributing
+
+PRs are welcome. Opening an issue to discuss large changes beforehand is a good idea.
+
+For more information, take a look at [A-Frame's contributing guide](https://github.com/aframevr/aframe/blob/master/CONTRIBUTING.md), specifically the [steps for contributing code](https://github.com/aframevr/aframe/blob/master/CONTRIBUTING.md#contribute-code-to-a-frame).
