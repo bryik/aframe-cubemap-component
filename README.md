@@ -20,9 +20,9 @@ By default, the height, width, and depth of the skybox are set to 5000. In other
 
 ### Events
 
-|       Name        |                 Description                 |
-| :---------------: | :-----------------------------------------: |
-| cubeTextureLoaded | Emitted when a texture has finished loading |
+|     Name      |                 Description                 |
+| :-----------: | :-----------------------------------------: |
+| cubemapLoaded | Emitted when a texture has finished loading |
 
 ### Usage
 
