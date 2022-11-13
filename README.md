@@ -98,7 +98,7 @@ To run the examples locally:
 npm start
 ```
 
-This should start a local dev server, go to [http://localhost:3000/examples/](http://localhost:3000/examples/) to inspect the examples. To stop the server, hit `CONTROL-C`.
+This should start a local dev server, go to [http://localhost:3000/](http://localhost:3000/) to inspect the examples. To stop the server, hit `CONTROL-C`.
 
 ### Distribution
 
