@@ -1,7 +1,8 @@
 <html>
   <head>
     <title>A-Frame Cubemap Component - a-assets</title>
-    <script src="../../build.js"></script>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="/index.js"></script>
   </head>
   <body>
     <a-scene stats>
@@ -26,12 +27,12 @@
         </a-cubemap>
         <a-cubemap id="goldenGate">
           <!--The order of these images is important!-->
-          <img src="../../assets/GoldenGateBridge2/posx.jpg" />
-          <img src="../../assets/GoldenGateBridge2/negx.jpg" />
-          <img src="../../assets/GoldenGateBridge2/posy.jpg" />
-          <img src="../../assets/GoldenGateBridge2/negy.jpg" />
-          <img src="../../assets/GoldenGateBridge2/posz.jpg" />
-          <img src="../../assets/GoldenGateBridge2/negz.jpg" />
+          <img src="/examples/assets/GoldenGateBridge2/posx.jpg" />
+          <img src="/examples/assets/GoldenGateBridge2/negx.jpg" />
+          <img src="/examples/assets/GoldenGateBridge2/posy.jpg" />
+          <img src="/examples/assets/GoldenGateBridge2/negy.jpg" />
+          <img src="/examples/assets/GoldenGateBridge2/posz.jpg" />
+          <img src="/examples/assets/GoldenGateBridge2/negz.jpg" />
         </a-cubemap>
       </a-assets>
       <a-entity id="skybox" cubemap="folder:#yokohama"></a-entity>
