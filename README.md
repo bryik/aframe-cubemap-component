@@ -29,7 +29,7 @@ By default, the height, width, and depth of the skybox are set to 5000. In other
 Attach the component to an entity using the path to the folder holding your cubemap as the attribute.
 
 ```html
-<a-entity cubemap="folder: /assets/Yokohama3/"></a-entity>
+<a-entity cubemap="folder: /examples/assets/Yokohama3/"></a-entity>
 ```
 
 Inside the folder, the component assumes the following naming scheme:
@@ -60,13 +60,13 @@ Install and use by directly including the [browser files](dist):
 ```html
 <head>
   <title>My A-Frame Scene</title>
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-cubemap-component@2.1.1/dist/aframe-cubemap-component.min.js"></script>
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-cubemap-component@2.1.1/index.js"></script>
 </head>
 
 <body>
   <a-scene>
-    <a-entity cubemap="folder: /assets/Yokohama3/"></a-entity>
+    <a-entity cubemap="folder: /examples/assets/Yokohama3/"></a-entity>
   </a-scene>
 </body>
 ```
@@ -95,12 +95,20 @@ npm i
 To run the examples locally:
 
 ```bash
-npm run dev
+npm start
 ```
 
-This should start a live reloading local dev server. To stop the server, hit `CONTROL-C`.
+This should start a local dev server, go to [http://localhost:3000/examples/](http://localhost:3000/examples/) to inspect the examples. To stop the server, hit `CONTROL-C`.
 
-To generate a minified bundle: `npm run dist`.
+### Distribution
+
+Prior to version 3.0.0, this component used a Browserify workflow. This was fine until it prevented upgrading to A-Frame v 1.3.0 which was needed to [resolve a rendering issue](https://github.com/bryik/aframe-cubemap-component/issues/39#issuecomment-1312806990). Since this component has no external dependencies and webpack is annoying to setup, I decided to go for a low-tech solution.
+
+Users can pin specific versions by altering the unpkg URL:
+
+```
+https://unpkg.com/aframe-cubemap-component@2.1.1/index.js
+```
 
 ### Contributing
 

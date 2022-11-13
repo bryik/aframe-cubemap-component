@@ -51,6 +51,7 @@ AFRAME.registerComponent("cubemap", {
       uniforms: shader.uniforms,
       depthWrite: false,
       side: THREE.BackSide,
+      transparent: true
     }).clone();
     // Threejs seems to have removed the 'tCube' uniform.
     // Workaround from: https://stackoverflow.com/a/59454999/6591491
