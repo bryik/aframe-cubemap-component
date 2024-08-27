@@ -38,7 +38,7 @@ AFRAME.registerComponent("cubemap", {
 
     // A Cubemap can be rendered as a mesh composed of a BoxBufferGeometry and
     // ShaderMaterial. EdgeLength will scale the mesh
-    this.geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+    this.geometry = new THREE.BoxGeometry(1, 1, 1);
 
     // Now for the ShaderMaterial.
     const shader = THREE.ShaderLib["cube"];
