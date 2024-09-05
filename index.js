@@ -54,8 +54,9 @@ AFRAME.registerComponent("cubemap", {
       transparent: true
     }).clone();
     
-    //https://github.com/mrdoob/three.js/wiki/Migration-Guide#145--146
-    //they changed the name of the uniform from tCube to envMap, this variable helps us keep track of the name across three js versions
+   // Starting in Three.js v146, `envMap` changed to `tCube`.
+    // This variable helps us keep track of the name across Three.js versions.
+    // https://github.com/mrdoob/three.js/wiki/Migration-Guide#145--146
     this.envMapUniformName = this.material.uniforms["envMap"] ? "envMap" : "tCube";
   
 
@@ -70,8 +71,6 @@ AFRAME.registerComponent("cubemap", {
 
     // A dummy texture is needed (otherwise the shader will be invalid and spew
     // a million errors)
-    
-  //   this.material.uniforms["envMap"].value = new THREE.Texture();
     this.material.uniforms[this.envMapUniformName].value = new THREE.Texture();
 
     this.loader = new THREE.CubeTextureLoader();
