@@ -121,6 +121,10 @@ npm version <update_type>
 
 4. Update the `unpkg.com/aframe-cubemap-component@VERSION/index.js` link in this README.
 
+5. Push the tag that `npm version` created: `git push origin tag <tag_name>` (use `git tag` to see the existing tags).
+
+6. Draft a [new release](https://github.com/bryik/aframe-cubemap-component/releases/new).
+
 ### A note about Browserify
 
 Prior to version 3.0.0, this component used a Browserify workflow. This was fine until it prevented upgrading to A-Frame v 1.3.0 which was needed to [resolve a rendering issue](https://github.com/bryik/aframe-cubemap-component/issues/39#issuecomment-1312806990). Since this component has no external dependencies and webpack is annoying to setup, I decided to go for a low-tech solution.
