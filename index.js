@@ -38,7 +38,7 @@ AFRAME.registerComponent("cubemap", {
 
     // A Cubemap can be rendered as a mesh composed of a BoxBufferGeometry and
     // ShaderMaterial. EdgeLength will scale the mesh
-    this.geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+    this.geometry = new THREE.BoxGeometry(1, 1, 1);
 
     // Now for the ShaderMaterial.
     const shader = THREE.ShaderLib["cube"];
@@ -53,16 +53,26 @@ AFRAME.registerComponent("cubemap", {
       side: THREE.BackSide,
       transparent: true
     }).clone();
+    
+   // Starting in Three.js v146, `envMap` changed to `tCube`.
+    // This variable helps us keep track of the name across Three.js versions.
+    // https://github.com/mrdoob/three.js/wiki/Migration-Guide#145--146
+    this.envMapUniformName = this.material.uniforms["envMap"] ? "envMap" : "tCube";
+  
+
     // Threejs seems to have removed the 'tCube' uniform.
     // Workaround from: https://stackoverflow.com/a/59454999/6591491
+    
     Object.defineProperty(this.material, "envMap", {
       get: function () {
-        return this.uniforms.envMap.value;
+          return this.uniforms.envMap ? this.uniforms.envMap.value : this.uniforms.tCube.value;
       },
     });
+
     // A dummy texture is needed (otherwise the shader will be invalid and spew
     // a million errors)
-    this.material.uniforms["envMap"].value = new THREE.Texture();
+    this.material.uniforms[this.envMapUniformName].value = new THREE.Texture();
+
     this.loader = new THREE.CubeTextureLoader();
 
     // We can create the mesh now and update the material with a texture later on
@@ -135,8 +145,8 @@ AFRAME.registerComponent("cubemap", {
         rendererSystem.applyColorCorrection(texture);
 
         // Apply cubemap texture to shader uniforms and dispose of the old texture.
-        const oldTexture = this.material.uniforms["envMap"].value;
-        this.material.uniforms["envMap"].value = texture;
+        const oldTexture = this.material.uniforms[this.envMapUniformName].value;
+        this.material.uniforms[this.envMapUniformName].value = texture;
         if (oldTexture) {
           oldTexture.dispose();
         }
@@ -153,7 +163,7 @@ AFRAME.registerComponent("cubemap", {
    */
   remove: function () {
     this.geometry.dispose();
-    this.material.uniforms["envMap"].value.dispose();
+    this.material.uniforms[this.envMapUniformName].value.dispose();
     this.material.dispose();
     this.el.removeObject3D("cubemap");
   },
