@@ -60,7 +60,7 @@ Install and use by directly including the [browser files](dist):
 ```html
 <head>
   <title>My A-Frame Scene</title>
-  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-cubemap-component@3.0.0/index.js"></script>
 </head>
 
@@ -100,7 +100,28 @@ npm start
 
 This should start a local dev server, go to [http://localhost:3000/](http://localhost:3000/) to inspect the examples. To stop the server, hit `CONTROL-C`.
 
-### Distribution
+## Contributing
+
+PRs are welcome. Opening an issue to discuss large changes beforehand is a good idea.
+
+For more information, take a look at [A-Frame's contributing guide](https://github.com/aframevr/aframe/blob/master/CONTRIBUTING.md), specifically the [steps for contributing code](https://github.com/aframevr/aframe/blob/master/CONTRIBUTING.md#contribute-code-to-a-frame).
+
+## Publishing
+
+1. Add a new entry to `./CHANGELOG.md`.
+
+2. Increment `"version"` in `./package.json` following [SEMVER](https://semver.org/).
+
+```bash
+# Where <update_type> is one of (patch, major, or minor)
+npm version <update_type>
+```
+
+3. `npm publish`
+
+4. Update the `unpkg.com/aframe-cubemap-component@VERSION/index.js` link in this README.
+
+### A note about Browserify
 
 Prior to version 3.0.0, this component used a Browserify workflow. This was fine until it prevented upgrading to A-Frame v 1.3.0 which was needed to [resolve a rendering issue](https://github.com/bryik/aframe-cubemap-component/issues/39#issuecomment-1312806990). Since this component has no external dependencies and webpack is annoying to setup, I decided to go for a low-tech solution.
 
@@ -109,9 +130,3 @@ Users can pin specific versions by altering the unpkg URL:
 ```
 https://unpkg.com/aframe-cubemap-component@2.1.1/index.js
 ```
-
-### Contributing
-
-PRs are welcome. Opening an issue to discuss large changes beforehand is a good idea.
-
-For more information, take a look at [A-Frame's contributing guide](https://github.com/aframevr/aframe/blob/master/CONTRIBUTING.md), specifically the [steps for contributing code](https://github.com/aframevr/aframe/blob/master/CONTRIBUTING.md#contribute-code-to-a-frame).
