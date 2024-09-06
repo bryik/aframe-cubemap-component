@@ -1,11 +1,15 @@
 <html>
   <head>
     <title>A-Frame Cubemap Component - Fade</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="/index.js"></script>
   </head>
   <body>
     <a-scene stats>
+      <a-entity
+        id="skybox"
+        cubemap="folder: /examples/assets/Yokohama3/"
+      ></a-entity>
       <a-sphere
         id="sphere"
         radius="4000"
@@ -14,7 +18,6 @@
         animation__fadeOut="property: material.opacity; from: 0.0; to: 1.0; startEvents: fadeOut"
       >
       </a-sphere>
-      <a-entity id="skybox" cubemap="folder: /examples/assets/Yokohama3/"></a-entity>
     </a-scene>
 
     <script>
@@ -23,38 +26,34 @@
         sphere = document.querySelector("#sphere"),
         cubemapPath = "folder: /examples/assets/Yokohama3/";
 
-      function toggleBackground() {
-        cubemapPath =
-          cubemapPath === "folder: /examples/assets/Yokohama3/"
-            ? "folder: /examples/assets/GoldenGateBridge2/"
-            : "folder: /examples/assets/Yokohama3/";
+      // When the fadeout animation completes, swap the cubemap and fade in.
+      sphere.addEventListener("animationcomplete", function (event) {
+        if (event.detail.name === "animation__fadeout") {
+          skybox.setAttribute("cubemap", cubemapPath);
+          sphere.emit("fadeIn");
+        }
+      });
 
-        sphere.emit("fadeOut");
-        sphere.addEventListener("animationcomplete", function (event) {
-          if (event.detail.name === "animation__fadeout") {
-            skybox.setAttribute("cubemap", cubemapPath);
-            sphere.emit("fadeIn");
-          }
-        });
+      function run() {
+        // fade in first cubemap
+        sphere.emit("fadeIn");
+
+        // swap cubemap every 5 seconds
+        setInterval(() => {
+          sphere.emit("fadeOut");
+
+          // Swap
+          cubemapPath =
+            cubemapPath === "folder: /examples/assets/Yokohama3/"
+              ? "folder: /examples/assets/GoldenGateBridge2/"
+              : "folder: /examples/assets/Yokohama3/";
+        }, 5000);
       }
 
       if (scene.hasLoaded) {
         run();
       } else {
         scene.addEventListener("loaded", run);
-      }
-
-      function run() {
-        // Cubemap has loaded, so fade in.
-        sphere.emit("fadeIn");
-
-        // Toggle the background.
-        toggleBackground();
-
-        // Toggle the background back and forth every 5 seconds.
-        skybox.addEventListener("cubemapLoaded", () => {
-          setTimeout(toggleBackground, 5000);
-        });
       }
     </script>
   </body>

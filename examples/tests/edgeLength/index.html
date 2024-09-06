@@ -1,13 +1,15 @@
 <html>
   <head>
     <title>A-Frame Cubemap Component - edgeLength Test</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="/index.js"></script>
   </head>
   <body>
     <a-scene>
       <!-- At this size, the skybox is no longer seamless. -->
-      <a-entity cubemap="folder: /examples/assets/Yokohama3/; edgeLength: 50"></a-entity>
+      <a-entity
+        cubemap="folder: /examples/assets/Yokohama3/; edgeLength: 50"
+      ></a-entity>
     </a-scene>
   </body>
 </html>
