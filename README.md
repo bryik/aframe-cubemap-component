@@ -61,7 +61,7 @@ Install and use by directly including the [browser files](dist):
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-cubemap-component@3.0.0/index.js"></script>
+  <script src="https://unpkg.com/aframe-cubemap-component@4.0.0/index.js"></script>
 </head>
 
 <body>
@@ -117,7 +117,7 @@ For more information, take a look at [A-Frame's contributing guide](https://gith
 npm version <update_type>
 ```
 
-3. `npm publish`
+3. `npm publish` (may need to `npm login` first)
 
 4. Update the `unpkg.com/aframe-cubemap-component@VERSION/index.js` link in this README.
 
