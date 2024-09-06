@@ -51,21 +51,24 @@ AFRAME.registerComponent("cubemap", {
       uniforms: shader.uniforms,
       depthWrite: false,
       side: THREE.BackSide,
-      transparent: true
+      transparent: true,
     }).clone();
-    
-   // Starting in Three.js v146, `envMap` changed to `tCube`.
+
+    // Starting in Three.js v146, `envMap` changed to `tCube`.
     // This variable helps us keep track of the name across Three.js versions.
     // https://github.com/mrdoob/three.js/wiki/Migration-Guide#145--146
-    this.envMapUniformName = this.material.uniforms["envMap"] ? "envMap" : "tCube";
-  
+    this.envMapUniformName = this.material.uniforms["envMap"]
+      ? "envMap"
+      : "tCube";
 
     // Threejs seems to have removed the 'tCube' uniform.
     // Workaround from: https://stackoverflow.com/a/59454999/6591491
-    
+
     Object.defineProperty(this.material, "envMap", {
       get: function () {
-          return this.uniforms.envMap ? this.uniforms.envMap.value : this.uniforms.tCube.value;
+        return this.uniforms.envMap
+          ? this.uniforms.envMap.value
+          : this.uniforms.tCube.value;
       },
     });
 
